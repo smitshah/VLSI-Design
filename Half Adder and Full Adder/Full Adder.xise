@@ -1,0 +1,45 @@
+// Full Adder using Logic Gates
+module e22(
+    input a,
+    input b,
+    input cin,
+    output sum,
+    output carry
+    );
+wire y1, y2, y3;
+xor(sum,a,b,cin);
+and(y1,a,b);
+and(y2,a,cin);
+and(y3,b,cin);
+or(carry,y1,y2,y3);
+endmodule
+
+
+
+
+// Full Adder using Logical Operator
+module e22_1(
+    input a,
+    input b,
+    input cin,
+    output sum,
+    output carry
+    );
+assign sum= a^b^cin;
+assign carry= (a&b)|(a&cin)|(b&cin);
+endmodule
+
+
+
+
+// Full Adder using Arithmatic Operator
+module e22_2(
+    input a,
+    input b,
+    input cin,
+    output sum,
+    output carry
+    );
+assign sum= a^b^cin;
+assign carry= (a*b)+(cin *(b+a));
+endmodule
