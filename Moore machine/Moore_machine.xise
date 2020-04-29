@@ -1,0 +1,132 @@
+// Moore Machine
+// ....10110....
+module moore_4bit(din, reset, clk, y);
+
+	input din;
+	input reset, clk;
+	output reg y;
+	
+	reg [2:0] cst, nst;
+	
+	parameter s0=3'd0,
+				 s1=3'd1,
+				 s2=3'd2,
+				 s3=3'd3,
+				 s4=3'd4,
+				 s5=3'd5;
+	
+	always@(posedge clk)
+	begin
+		if(reset)
+			cst<=s0;
+		else
+			cst<=nst;
+	end
+	
+	always@(cst)
+	begin
+			case(cst)
+				s0: if(din==1)
+						begin
+							nst=s1;
+							y=0;
+						end
+					 else
+						begin
+							nst=s0;
+							y=0;
+						end
+				s1: if(din==1)
+						begin
+							nst=s1;
+							y=0;
+						end
+					 else
+						begin
+							nst=s2;
+							y=0;
+						end
+				s2: if(din==1)
+						begin
+							nst=s3;
+							y=0;
+						end
+					 else
+						begin
+							nst=s0;
+							y=0;
+						end
+				s3: if(din==1)
+						begin
+							nst=s4;
+							y=0;
+						end
+					 else
+						begin
+							nst=s2;
+							y=0;
+						end
+				s4: if(din==1)
+						begin
+							nst=s1;
+							y=0;
+						end
+					 else
+						begin
+							nst=s5;
+							y=0;
+						end
+				s5: if(din==1)
+						begin
+							nst=s1;
+							y=1;
+						end
+					 else
+						begin
+							nst=s0;
+							y=1;
+						end
+			endcase
+	end
+endmodule
+
+
+
+
+
+
+
+// Moore Machine Test Bench
+module mooretb;
+
+	// Inputs
+	reg din;
+	reg reset;
+	reg clk;
+
+	// Outputs
+	wire y;
+
+	// Instantiate the Unit Under Test (UUT)
+	moore_4bit uut (
+		.din(din), 
+		.reset(reset), 
+		.clk(clk), 
+		.y(y)
+	);
+
+	initial begin
+		// Initialize Inputs
+		din = 0;
+		clk = 0;
+		reset = 1;
+
+		// Wait 100 ns for global reset to finish
+		#50;
+        reset=0;
+		// Add stimulus here
+
+	end
+      always #12 clk=~clk;
+		always #5 din=~din;
+endmodule
