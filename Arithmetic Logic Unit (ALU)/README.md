@@ -1,1 +1,3 @@
-Implementation of ALU using Test bench in Verilog
+# Implementation of ALU using Test bench in Verilog
+
+Please refer the attached pdf for RTL and Technology Schematic.
