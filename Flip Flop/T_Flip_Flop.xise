@@ -1,0 +1,91 @@
+// T Flip Flop
+module t_ff(
+    input t,
+    input preset,
+    input clk,
+    input clr,
+    output reg q,
+    output reg qbar
+    );
+	 
+	 initial
+	 begin
+	 q=0;
+	 qbar=1;
+	 end
+	 
+	 always@(posedge clk)
+	 begin
+		if(preset==1)
+			begin
+			q=1;
+			qbar=0;
+			end
+		else if(clr==0)
+			begin
+			q=0;
+			qbar=1;
+			end
+		else if(t==0)
+			begin
+			q=q;
+			qbar=qbar;
+			end
+		else
+			begin
+			q=~q;
+			qbar=~qbar;
+			end
+	 end
+endmodule
+
+
+
+
+
+// T Flip Flop Test Bench
+module t_ff_tb;
+
+	// Inputs
+	reg t;
+	reg preset;
+	reg clk;
+	reg clr;
+
+	// Outputs
+	wire q;
+	wire qbar;
+
+	// Instantiate the Unit Under Test (UUT)
+	t_ff uut (
+		.t(t), 
+		.preset(preset), 
+		.clk(clk), 
+		.clr(clr), 
+		.q(q), 
+		.qbar(qbar)
+	);
+
+	initial begin
+		// Initialize Inputs
+		#1 $monitor("t=",t,"clk=",clk,"clr=",clr,"preset=",preset,"q=",q,"qbar=",qbar);
+		clk=1;
+		
+		// For preset
+		clr=1;
+		preset=1; #100;
+		
+		// For Clear
+		clr=0;
+		preset=0; #100;
+		
+		// For T=0
+		clr=1;
+		t=0; #100;
+		
+		// For T=1
+		t=1; #100;
+	end
+      always #10 clk=~clk;
+		always #30 t=~t;
+endmodule

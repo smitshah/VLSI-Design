@@ -1,0 +1,80 @@
+// D Flip Flop
+module d_ff(
+    input d,
+    input clk,
+    input clr,
+    input preset,
+    output reg q,
+    output reg qbar
+    );
+	 initial
+	 begin
+	 q=0;
+	 qbar=1;
+	 end
+	 
+	 always@(posedge clk)
+	 begin
+		if(preset==1)
+			begin
+			q=1;
+			qbar=0;
+			end
+		else if(clr==0)
+			begin
+			q=0;
+			qbar=1;
+			end
+		else
+			begin
+			q=d;
+			qbar=~d;
+			end
+	 end
+endmodule
+
+
+
+
+
+
+// D Flip Flop Test Bench
+module d_ff_tb;
+
+	// Inputs
+	reg d;
+	reg clk;
+	reg clr;
+	reg preset;
+
+	// Outputs
+	wire q;
+	wire qbar;
+
+	// Instantiate the Unit Under Test (UUT)
+	d_ff uut (
+		.d(d), 
+		.clk(clk), 
+		.clr(clr), 
+		.preset(preset), 
+		.q(q), 
+		.qbar(qbar)
+	);
+
+	initial begin
+		// Initialize Inputs
+		#1 $monitor("d=",d,"clk=",clk,"clr=",clr,"preset=",preset,"q=",q,"qbar=",qbar);
+		clk=1;
+		d=1;
+		// For preset
+		clr=1;
+		preset=1; #100;
+		
+		// For Clear
+		clr=0;
+		preset=0; #100;
+	end
+      always #200 clk=~clk; 
+		always #150 d=~d;
+      
+endmodule
