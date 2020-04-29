@@ -1,0 +1,20 @@
+module e1(
+    input a,
+    input b,
+    output c,
+    output c1,
+    output c2,
+    output c3,
+    output c4,
+    output c5,
+    output c6
+    );
+and(c,a,b);
+or(c1,a,b);
+not(c2,a);
+nand(c3,a,b);
+nor(c4,a,b);
+xor(c5,a,b);
+xnor(c6,a,b);
+
+endmodule
