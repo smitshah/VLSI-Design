@@ -1,0 +1,38 @@
+// Half Adder using Logic Gates
+module e21(
+    input a,
+    input b,
+    output sum,
+    output carry
+    );
+xor(sum,a,b);
+and(carry,a,b);
+endmodule
+
+
+
+
+// Half Adder using Logical Operator
+module e21_1(
+    input a,
+    input b,
+    output sum,
+    output carry
+    );
+assign sum= a^b;
+assign carry= a&b;
+endmodule
+
+
+
+
+// Half Adder using Arithmatic Operator
+module e21_2(
+    input a,
+    input b,
+    output sum,
+    output carry
+    );
+assign sum= a^b;
+assign carry= a+b;
+endmodule
