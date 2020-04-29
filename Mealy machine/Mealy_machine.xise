@@ -1,0 +1,112 @@
+// Mealy Machine
+// ....1010....
+module mealy_4bit(din, reset, clk, y);
+
+	input din;
+	input reset, clk;
+	output reg y;
+	
+	reg [1:0] cst, nst;
+	
+	parameter s0=2'd0,
+				 s1=2'd1,
+				 s2=2'd2,
+				 s3=2'd3;
+	
+	always@(posedge clk)
+	begin
+		if(reset)
+			cst<=s0;
+		else
+			cst<=nst;
+	end
+	
+	always@(din or cst)
+	begin
+			case(cst)
+				s0: if(din==1)
+						begin
+							nst=s1;
+							y=0;
+						end
+					 else
+						begin
+							nst=s0;
+							y=0;
+						end
+				s1: if(din==1)
+						begin
+							nst=s1;
+							y=0;
+						end
+					 else
+						begin
+							nst=s2;
+							y=0;
+						end
+				s2: if(din==1)
+						begin
+							nst=s3;
+							y=0;
+						end
+					 else
+						begin
+							nst=s0;
+							y=0;
+						end
+				s3: if(din==1)
+						begin
+							nst=s1;
+							y=0;
+						end
+					 else
+						begin
+							nst=s2;
+							y=1;
+						end
+			endcase
+	end
+
+endmodule
+
+
+
+
+
+
+
+// Mealy Machine Test Bench
+module mealytb;
+
+	// Inputs
+	reg din;
+	reg reset;
+	reg clk;
+
+	// Outputs
+	wire y;
+
+	// Instantiate the Unit Under Test (UUT)
+	mealy_4bit uut (
+		.din(din), 
+		.reset(reset), 
+		.clk(clk), 
+		.y(y)
+	);
+
+	initial begin
+		// Initialize Inputs
+		din = 0;
+		clk = 0;
+		reset = 1;
+		
+
+		// Wait 100 ns for global reset to finish
+		#100;
+        reset=0;
+		// Add stimulus here
+
+	end
+      always #5 clk=~clk;
+		always #12 din=~din;
+endmodule
