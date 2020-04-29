@@ -1,1 +1,3 @@
 # Implementation of codes on Spartan 3 FPGA kit
+
+For Spartan 3, I have implemented it for Full Adder. I have not attached the out of kit, but by doing the same procedure as mentioned in file, you can get the out on kit also. 
