@@ -1,0 +1,51 @@
+// 4:1 Mux using Gate-level Modeling
+module exp3(
+    input s1,
+    input s0,
+    input i0,
+    input i1,
+    input i2,
+    input i3,
+    output y
+    );
+wire s1b, s0b,y1,y2,y3,y4;
+not(s1b,s1);
+not(s0b,s0);
+and(y1,s1b,s0b,i0);
+and(y2,s1b,s0,i1);
+and(y3,s1,s0b,i2);
+and(y4,s1,s0,i3);
+or(y,y1,y2,y3,y4);
+endmodule
+
+
+
+
+// 4:1 Mux using Data-flow Modeling
+module exp3_1(
+    input s1,
+    input s0,
+    input i0,
+    input i1,
+    input i2,
+    input i3,
+    output y
+    );
+assign y= (~s1&~s0&i0)|(~s1&s0&i1)|(s1&~s0&i2)|(s1&s0&i3);
+endmodule
+
+
+
+
+// 4:1 Mux using Arithmatic Operator
+module exp3_2(
+    input s1,
+    input s0,
+    input i0,
+    input i1,
+    input i2,
+    input i3,
+    output y
+    );
+assign y= s0?(s1?i3:i1):(s1?i2:i0);
+endmodule
